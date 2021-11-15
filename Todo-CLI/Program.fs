@@ -19,65 +19,87 @@ let FormatIndexedEntries indexedEntries =
                |> List.fold (fun x y -> x + y) header
     
 let rec MarkEntry user formattedEntries =
-    printf "Enter entry index: "
+    printf "Enter entry index (leave blank to go back to main menu): "
     let markEntryResult = 
         try
-            let input = Console.ReadLine() |> int
-            let entry = formattedEntries |> Seq.tryFind (fun x -> input = fst x)
-            match entry with
-            | None -> printfn "Invalid entry index. Try again.\n"; MarkEntry user formattedEntries
-            | Some x ->
-                let fullEntry = snd x
-                let editedEntry = EditEntry user fullEntry.EntryId (not fullEntry.Completed) fullEntry.Body
-                editedEntry |> SaveUser UserPath
-                true
+            let input = Console.ReadLine()
+            if input = "" 
+            then true
+            else
+                let input2 = input |> int
+                let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                match entry with
+                | None -> printfn "Invalid entry index. Try again.\n"; MarkEntry user formattedEntries
+                | Some x ->
+                    let fullEntry = snd x
+                    let editedEntry = EditEntry user fullEntry.EntryId (not fullEntry.Completed) fullEntry.Body
+                    editedEntry |> SaveUser UserPath
+                    true
         with
             | _ -> printfn "Not a number. Try again.\n"; MarkEntry user formattedEntries
     markEntryResult
     
 let rec DeleteEntryLoop user formattedEntries =
-    printf "Enter entry ID: "
+    printf "Enter entry ID (leave blank to go back to main menu): "
     let deleteEntryResult = 
         try
-            let input = Console.ReadLine() |> int
-            let entry = formattedEntries |> Seq.tryFind (fun x -> input = fst x)
-            match entry with
-            | None -> printfn "Invalid entry index. Try again.\n"; DeleteEntryLoop user formattedEntries
-            | Some x ->
-                let fullEntry = snd x
-                let editedEntry = DeleteEntry fullEntry.EntryId user
-                editedEntry |> SaveUser UserPath
-                true
+            let input = Console.ReadLine() 
+            if input = "" 
+            then true 
+            else
+                let input2 = input |> int
+                let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                match entry with
+                | None -> printfn "Invalid entry index. Try again.\n"; DeleteEntryLoop user formattedEntries
+                | Some x ->
+                    let fullEntry = snd x
+                    let editedEntry = DeleteEntry fullEntry.EntryId user
+                    editedEntry |> SaveUser UserPath
+                    true
         with
             | _ -> printfn "Not a number. Try again.\n"; DeleteEntryLoop user formattedEntries
     deleteEntryResult
 
 let rec EditEntryLoop user formattedEntries =
-    printf "Enter entry ID: "
+    printf "Enter entry ID (leave blank to go back to main menu): "
     let editEntryResult = 
         try
-            let input = Console.ReadLine() |> int
-            let entry = formattedEntries |> Seq.tryFind (fun x -> input = fst x)
-            match entry with
-            | None -> printfn "Invalid entry index. Try again.\n"; EditEntryLoop user formattedEntries
-            | Some x ->
-                let fullEntry = snd x
-                printf "Add the text to change (leave blank to keep original text): "
-                let newBody = Console.ReadLine()
-                let bodyResult = if newBody = "" then fullEntry.Body else newBody
-                let editedEntry = EditEntry user fullEntry.EntryId fullEntry.Completed bodyResult
-                editedEntry |> SaveUser UserPath
-                true
+            let input = Console.ReadLine()
+            if input = "" 
+            then true
+            else
+                let input2 = input |> int
+                let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                match entry with
+                | None -> printfn "Invalid entry index. Try again.\n"; EditEntryLoop user formattedEntries
+                | Some x ->
+                    let fullEntry = snd x
+                    printf "Add the text to change (leave blank to keep original text): "
+                    let newBody = Console.ReadLine()
+                    let bodyResult = if newBody = "" then fullEntry.Body else newBody
+                    let editedEntry = EditEntry user fullEntry.EntryId fullEntry.Completed bodyResult
+                    editedEntry |> SaveUser UserPath
+                    true
         with
             | _ -> printfn "Not a number. Try again.\n"; EditEntryLoop user formattedEntries
     editEntryResult
     
-let CreateNewEntry user =
+let rec CreateNewEntry user =
     printf "Enter the entry's text: "
     let body = Console.ReadLine()
-    let updatedUser = AddEntry user body
-    updatedUser |> SaveUser UserPath
-    true
+    if body = "" 
+    then 
+        printf "Entry cannot be blank. Return to main menu? [Y/N]: "
+        let choice = Console.ReadLine().ToUpper()
+        match choice with
+        | "Y" -> true
+        | _ -> 
+            printfn "Try again."
+            CreateNewEntry user
+    else
+        let updatedUser = AddEntry user body
+        updatedUser |> SaveUser UserPath
+        true
 
 let rec MainMenuLoop user users =
     let formattedEntries = CreateIndexedEntries user
