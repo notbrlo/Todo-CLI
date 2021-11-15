@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>Todo_CLI</RootNamespace>
     </PropertyGroup>
 
@@ -10,14 +10,15 @@
         <Compile Include="TodoModels.fs" />
         <Compile Include="TodoOperations.fs" />
         <Compile Include="Program.fs" />
-        <Folder Include="users" />
-        <Content Include="LICENSE" />
-        <Content Include="README.md" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="FSharp.Json" Version="0.4.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="users\**" />
     </ItemGroup>
 
 </Project>
