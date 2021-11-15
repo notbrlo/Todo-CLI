@@ -4,7 +4,7 @@ open System.IO
 open TodoModels
 open TodoOperations
 
-let UserPath = Path.GetFullPath(@"../../../users")
+let UserPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".users")
 
 let CreateIndexedEntries user =
     let entryArray = user.Entries |> Array.ofList
