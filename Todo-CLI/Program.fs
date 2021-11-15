@@ -4,7 +4,7 @@ open System.IO
 open TodoModels
 open TodoOperations
 
-let UserPath = Path.GetFullPath(@"..\..\..\users")
+let UserPath = Path.GetFullPath(@"../../../users")
 
 let CreateIndexedEntries user =
     let entryArray = user.Entries |> Array.ofList
@@ -81,7 +81,7 @@ let CreateNewEntry user =
 
 let rec MainMenuLoop user users =
     let formattedEntries = CreateIndexedEntries user
-    printfn "%s" (FormatIndexedEntries formattedEntries)
+    printfn $"{FormatIndexedEntries formattedEntries}"
     printfn "[N]ew Entry [E]dit Entry [D]elete Entry [M]ark Entry [Q]uit"
     printf "Make your selection: "
     let userInput = Console.ReadLine().ToUpper()
@@ -125,7 +125,7 @@ let MainLoop () =
     false
 
 [<EntryPoint>]
-let main argv =
+let main _ =
     // create directories if they don't already exist
     UserPath |> Directory.CreateDirectory |> ignore
     printfn "Welcome to Todo! Exit at any time with CTRL-C"
