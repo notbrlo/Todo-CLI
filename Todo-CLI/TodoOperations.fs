@@ -28,7 +28,7 @@ let EditEntry user entryId completed body =
     let elem = user.Entries |> Seq.tryFind (fun x -> x.EntryId = entryId)
     match elem with
     | None -> user
-    | Some(x) ->
+    | Some x ->
         let modEntry = {x with Completed = completed; Body = body}
         let modEntries = modEntry::(user.Entries |> List.filter (fun x -> x.EntryId <> modEntry.EntryId))
         {user with Entries = modEntries}

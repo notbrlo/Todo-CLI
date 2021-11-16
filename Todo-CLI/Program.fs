@@ -29,14 +29,18 @@ let rec MarkEntry user formattedEntries =
                 let input2 = input |> int
                 let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
                 match entry with
-                | None -> printfn "Invalid entry index. Try again.\n"; MarkEntry user formattedEntries
+                | None ->
+                    printfn "Invalid entry index. Try again.\n"
+                    MarkEntry user formattedEntries
                 | Some x ->
                     let fullEntry = snd x
                     let editedEntry = EditEntry user fullEntry.EntryId (not fullEntry.Completed) fullEntry.Body
                     editedEntry |> SaveUser UserPath
                     true
         with
-            | _ -> printfn "Not a number. Try again.\n"; MarkEntry user formattedEntries
+            | _ ->
+                printfn "Not a number. Try again.\n"
+                MarkEntry user formattedEntries
     markEntryResult
     
 let rec DeleteEntryLoop user formattedEntries =
@@ -50,14 +54,18 @@ let rec DeleteEntryLoop user formattedEntries =
                 let input2 = input |> int
                 let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
                 match entry with
-                | None -> printfn "Invalid entry index. Try again.\n"; DeleteEntryLoop user formattedEntries
+                | None ->
+                    printfn "Invalid entry index. Try again.\n"
+                    DeleteEntryLoop user formattedEntries
                 | Some x ->
                     let fullEntry = snd x
                     let editedEntry = DeleteEntry fullEntry.EntryId user
                     editedEntry |> SaveUser UserPath
                     true
         with
-            | _ -> printfn "Not a number. Try again.\n"; DeleteEntryLoop user formattedEntries
+            | _ ->
+                printfn "Not a number. Try again.\n"
+                DeleteEntryLoop user formattedEntries
     deleteEntryResult
 
 let rec EditEntryLoop user formattedEntries =
@@ -71,7 +79,9 @@ let rec EditEntryLoop user formattedEntries =
                 let input2 = input |> int
                 let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
                 match entry with
-                | None -> printfn "Invalid entry index. Try again.\n"; EditEntryLoop user formattedEntries
+                | None ->
+                    printfn "Invalid entry index. Try again.\n"
+                    EditEntryLoop user formattedEntries
                 | Some x ->
                     let fullEntry = snd x
                     printf "Add the text to change (leave blank to keep original text): "
@@ -81,7 +91,9 @@ let rec EditEntryLoop user formattedEntries =
                     editedEntry |> SaveUser UserPath
                     true
         with
-            | _ -> printfn "Not a number. Try again.\n"; EditEntryLoop user formattedEntries
+            | _ ->
+                printfn "Not a number. Try again.\n"
+                EditEntryLoop user formattedEntries
     editEntryResult
     
 let rec CreateNewEntry user =
@@ -114,7 +126,9 @@ let rec MainMenuLoop user users =
         | "M" -> MarkEntry user formattedEntries
         | "D" -> DeleteEntryLoop user formattedEntries
         | "Q" -> false
-        | _ -> printfn "Invalid input. Try again."; MainMenuLoop user users
+        | _ ->
+            printfn "Invalid input. Try again."
+            MainMenuLoop user users
     inputResult
 
 let MainLoop () =
@@ -148,7 +162,7 @@ let MainLoop () =
 
 [<EntryPoint>]
 let main _ =
-    // create directories if they don't already exist
+    // create directory if if doesn't already exist
     UserPath |> Directory.CreateDirectory |> ignore
     printfn "Welcome to Todo! Exit at any time with CTRL-C"
     let mutable loopResult = MainLoop ()
