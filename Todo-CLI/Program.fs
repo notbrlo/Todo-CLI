@@ -5,7 +5,7 @@ module Program =
     open TodoModels
     open TodoOperations
 
-    let UserPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".users")
+    let UserPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".todocli.users")
 
     let CreateIndexedEntries user =
         let entryArray = user.Entries |> Array.ofList
