@@ -165,7 +165,7 @@ module Program =
 
     [<EntryPoint>]
     let main _ =
-        // create directory if if doesn't already exist
+        // create directory if it doesn't already exist
         UserPath |> Directory.CreateDirectory |> ignore
         printfn "Welcome to Todo! Exit at any time with CTRL-C"
         let mutable loopResult = MainLoop ()
