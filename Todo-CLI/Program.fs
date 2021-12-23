@@ -2,6 +2,7 @@ namespace Todo_CLI
 module Program =
     open System
     open System.IO
+    open ConsoleTables
     open TodoModels
     open TodoOperations
 
@@ -15,11 +16,10 @@ module Program =
             |> List.ofArray
             
     let FormatIndexedEntries indexedEntries =
-        let header = "Index\tCompleted\tEntry\t\tLast Updated\n"
-        indexedEntries
-                   |> List.map (fun (index, entry) ->
-                       $"{index}\t{entry.Completed}\t\t{entry.Body}\t{entry.LastUpdated}\n")
-                   |> List.fold (fun x y -> x + y) header
+        let table = ConsoleTable("Index", "Completed", "Entry", "Last Updated")
+        for (index, entry) in indexedEntries do
+            table.AddRow(index, entry.Completed, entry.Body, entry.LastUpdated) |> ignore
+        table.ToString()
         
     let rec MarkEntry user formattedEntries =
         printf "Enter entry index (leave blank to go back to main menu): "
