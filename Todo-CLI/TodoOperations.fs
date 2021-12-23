@@ -6,7 +6,7 @@ module TodoOperations =
     open TodoModels
 
     let private NewUser email = {UserId = Guid.NewGuid(); Email = email; Entries = []}
-    let private NewEntry body = {EntryId = Guid.NewGuid(); Completed = false; Body = body}
+    let private NewEntry body = {EntryId = Guid.NewGuid(); Completed = false; Body = body; LastUpdated = DateTime.Now}
 
     // public-facing operations
     let GetUser email users = users |> Seq.tryFind (fun x -> x.Email = email)
@@ -30,7 +30,7 @@ module TodoOperations =
         match elem with
         | None -> user
         | Some x ->
-            let modEntry = {x with Completed = completed; Body = body}
+            let modEntry = {x with Completed = completed; Body = body; LastUpdated = DateTime.Now}
             let modEntries = modEntry::(user.Entries |> List.filter (fun x -> x.EntryId <> modEntry.EntryId))
             {user with Entries = modEntries}
             

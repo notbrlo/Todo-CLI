@@ -10,13 +10,15 @@ module Program =
     let CreateIndexedEntries user =
         let entryArray = user.Entries |> Array.ofList
         entryArray
+            |> Array.sortByDescending (fun x -> x.LastUpdated)
             |> Array.map (fun x -> (Array.findIndex (fun y -> y.EntryId = x.EntryId) entryArray, x))
             |> List.ofArray
             
     let FormatIndexedEntries indexedEntries =
-        let header = "Index\tCompleted\tEntry\n===============================================\n"
+        let header = "Index\tCompleted\tEntry\t\tLast Updated\n"
         indexedEntries
-                   |> List.map (fun (index, entry) -> $"{index}\t{entry.Completed}\t\t{entry.Body}\n")
+                   |> List.map (fun (index, entry) ->
+                       $"{index}\t{entry.Completed}\t\t{entry.Body}\t{entry.LastUpdated}\n")
                    |> List.fold (fun x y -> x + y) header
         
     let rec MarkEntry user formattedEntries =
