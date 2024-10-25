@@ -18,7 +18,7 @@ module Program =
     let FormatIndexedEntries indexedEntries =
         let table = ConsoleTable("Index", "Completed", "Entry", "Last Updated")
         for (index, entry) in indexedEntries do
-            table.AddRow(index, entry.Completed, entry.Body, entry.LastUpdated) |> ignore
+            table.AddRow(index + 1, entry.Completed, entry.Body, entry.LastUpdated) |> ignore
         table.ToString()
         
     let rec MarkEntry user formattedEntries =
@@ -30,7 +30,7 @@ module Program =
                 then true
                 else
                     let input2 = input |> int
-                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 - 1 = fst x)
                     match entry with
                     | None ->
                         printfn "Invalid entry index. Try again.\n"
@@ -55,7 +55,7 @@ module Program =
                 then true 
                 else
                     let input2 = input |> int
-                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 - 1 = fst x)
                     match entry with
                     | None ->
                         printfn "Invalid entry index. Try again.\n"
@@ -80,7 +80,7 @@ module Program =
                 then true
                 else
                     let input2 = input |> int
-                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 = fst x)
+                    let entry = formattedEntries |> Seq.tryFind (fun x -> input2 - 1 = fst x)
                     match entry with
                     | None ->
                         printfn "Invalid entry index. Try again.\n"
