@@ -11,4 +11,6 @@ The code is ugly, and probably as fragile as my ego, but it works!
 
 ~~Runs on .NET 5 and 6.~~
 
-At this point, all I can say is that it compiles and runs using net8.0 on macOS Sonoma. I don't really use F# much these days... 
+~~At this point, all I can say is that it compiles and runs using net8.0 on macOS Sonoma. I don't really use F# much these days...~~
+
+As for May 2025, it builds and runs using net9.0 on Fedora Linux 42. Other operating systems? Your guess is as good as mine!

@@ -26,10 +26,10 @@
             "WARNING16": "button at the bottom of this file.",
             "WARNING17": "*********************************************************************************",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Todo-CLI/bin/Debug/net5.0/Todo-CLI.dll",
+            "program": "${workspaceFolder}/Todo-CLI/bin/Debug/net9.0/Todo-CLI.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
         {

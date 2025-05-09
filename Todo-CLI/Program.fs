@@ -18,7 +18,10 @@ module Program =
     let FormatIndexedEntries indexedEntries =
         let table = ConsoleTable("Index", "Completed", "Entry", "Last Updated")
         for (index, entry) in indexedEntries do
-            table.AddRow(index + 1, entry.Completed, entry.Body, entry.LastUpdated) |> ignore
+            table.AddRow(index + 1,
+                         (if entry.Completed then "Yes" else "No"),
+                         entry.Body,
+                         entry.LastUpdated) |> ignore
         table.ToString()
         
     let rec MarkEntry user formattedEntries =
