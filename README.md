@@ -14,3 +14,7 @@ The code is ugly, and probably as fragile as my ego, but it works!
 ~~At this point, all I can say is that it compiles and runs using net8.0 on macOS Sonoma. I don't really use F# much these days...~~
 
 As for May 2025, it builds and runs using net9.0 on Fedora Linux 42. Other operating systems? Your guess is as good as mine!
+
+I've also included devcontainer files so you don't have to think about it!
+
+**NOTE**: At this time, the devcontainer will only work when using JetBrains Rider. Working on getting it working with Code as well.
